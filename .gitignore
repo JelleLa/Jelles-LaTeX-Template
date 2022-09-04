@@ -1,6 +1,6 @@
 # File types to be ignored when pushing to the origin
-.toc
-.aux
-.out
-.log
-.listing
+*.toc
+*.aux
+*.out
+*.log
+*.listing
