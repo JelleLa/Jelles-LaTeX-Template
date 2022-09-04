@@ -1,0 +1,352 @@
+%=====================================================================================
+% - Title: latex
+% - Author: Jelle Langedijk
+% - Filename: `latex.tex`
+% - Purpose: A complete, clear
+%	template for writing LaTeX
+%	files that is TeXlive-compliant.
+%=====================================================================================
+%% PREAMBLE --------------------------------------------------------------------------
+% --> Document Variables
+\newcommand{\Title}{My \LaTeXe{} template documentation}	%Document title
+\newcommand{\Author}{J. Langedijk}						%Document author
+\newcommand{\Date}{\today}								%Document date
+\newcommand{\Institute}{\href{https://github.com/JelleLa/Jelles-LaTeX-Template}{Github Repository}}						%Document institute
+\newcommand{\Docsummary}{								%Document summary
+The features of my custom \LaTeXe template are documented here for reference.
+}
+% --> Setting Document Class, Input, Language and Time
+\documentclass[leqno]{article}			%`leqno` places equation tags to the left
+\usepackage[utf8]{inputenc}				%Unicode Support
+\usepackage[english]{babel}				%Language
+\usepackage[
+			long,						%Long format date
+			nodayofweek,				%Don't show day of week
+			level,						%No clue
+			24hr						%24h format
+			]{datetime}					%Set date settings
+\newcommand{\now}{\today, \currenttime} %Print date+time
+% --> Fonts
+\usepackage{kpfonts}					%Font, supported by TeXlive
+\usepackage[T1]{fontenc}				%Magic thing to get the font working
+% --> Header and Footer Styles
+\pagestyle{headings}					%Headings page number style
+\usepackage{lastpage}					%Last page
+% --> Multicolumns
+\usepackage{multicol}					%Multi-Columns
+% --> TiKz Things
+\usepackage{tikz}						%TiKz
+\usepackage{pdfpages}					%PDF importer, at the wrong spot
+\usetikzlibrary{positioning}			%Positioning TiKz Library
+% --> Table Things
+\usepackage{tabularx}					%TabularX, to make more sexy tables
+\usepackage{booktabs}					%Booktabs in tables
+% --> Custom Itemize
+\usepackage{enumitem}					%Custom itemize behavior
+\setitemize{noitemsep,
+topsep=0pt,parsep=0pt,partopsep=0pt}
+% --> AMSTeX Things
+\usepackage{amsmath}					%All the AMSMath things
+\usepackage{amssymb}					%Cute symbols
+\usepackage{amsthm}						%Theorems
+% --> Graphics and Figures
+\usepackage{xcolor}						%Fancy colors
+\usepackage{geometry}				    %Page geometry settings
+\usepackage{graphicx}					%Graphics support
+\usepackage{float}						%Float support
+\usepackage{caption}					%For subcaptions in subfigures
+\usepackage{hologo}						%Fancy Logos
+% --> Graphs and Plots
+\usepackage{pgfplots}					%Plotting
+\pgfplotsset{							%Defaults
+	compat=1.18,						%Compatibility
+	clip=false,							%Do not clip plots
+	width=0.9\textwidth,				%Plot width
+	height=0.7\textwidth,				%Plot height
+	axis lines=middle,					%Axis style
+	xlabel=$x$,							%xlabel
+	ylabel=$y$,							%ylabel
+	grid style=dashed					%Grid style
+	}
+\newenvironment{plot}[2]				%Plot Environment
+	{
+	\newcommand{\plotcap}{#1}			%Caption variable
+	\newcommand{\plotlab}{#2}			%Label variable
+	\begin{figure}[H]					%Float figure
+		\centering						%Center figure
+		\begin{tikzpicture}				%Start TiKz environment
+		\begin{axis}					%Start Axis environment
+	}
+	{
+		\end{axis}						%Close Axis environment
+		\end{tikzpicture}				%Close TiKz environment
+	\caption{\plotcap}					%Figure caption
+	\label{\plotlab}					%Figure label
+	\end{figure}						%Close label
+	}
+% --> Referencing and `hyperref` Settings
+\usepackage{hyperref}					%For cross-referencing, links, forms and more
+\hypersetup{
+    colorlinks=true,					%Links have colors
+    linkcolor=cyan,						%Link color
+    filecolor=magenta,					%File Color
+    urlcolor=cyan,						%URL Color
+	pdftitle={\Title, \Author},			%Embedded PDF Title
+	pdfauthor={\Author},     			%Embedded PDF Author
+    pdfsubject={\Title},   				%Embedded PDF Subject
+    }
+\renewcommand\LayoutCheckField[2]{#1\hfill #2}
+% --> Listings and Code
+\usepackage{listings}					%Code Listings
+\lstdefinestyle{mystyle}{
+	backgroundcolor= {},				%Transparent background
+	commentstyle=\color{green},			%Comment color
+	keywordstyle=\color{magenta},		%Keyword color
+	numberstyle=\tiny\color{black},		%Line number color
+	stringstyle=\color{purple},			%String color
+	basicstyle=\ttfamily\small			%->
+	\color{black},						%Font style
+	breakatwhitespace=false,			%Do not break at whitespace
+	breaklines=true,					%Break lines
+	captionpos=b,						%Add caption below
+	keepspaces=true,					%Keep spaces in code
+	numbers=left,						%Line number position
+	numbersep=5pt,						%Line number separation
+	showspaces=false,					%Show space indicator
+	showstringspaces=false,				%Show space indicator in strings
+	showtabs=true,						%Show tab indicator
+	tabsize=2,							%Tab size
+}
+\lstset{style=mystyle}					%Set `mystyle` as default listing style
+% --> Tcolorbox and Code Environment
+\usepackage{tcolorbox}					%Fancy Boxes around text, e.g. for code blocks
+\tcbuselibrary{							%Set libraries for `tcolorbox`
+	skins,								%Skins
+	breakable,							%Breakable boxes
+	listings}							%Listing boxes
+\tcbset{listing engine=listings}		%Set listing engine
+\newtcblisting[
+	auto counter,
+	number within=section]{code}[3]{	%Code environment
+	listing only,						%Only show listing
+	fonttitle=\bfseries,				%Title font
+	colback=black!5!white,				%Background color
+	colframe=blue!20!black,				%Frame color
+	title=Listing \thetcbcounter: #1,	%Box title
+	size=normal,						%Box size
+	bottom=0.1 mm,						%Bottom sep.
+	sharp corners,						%Use sharp corners
+	breakable,							%Allow box to break
+	label=#3,							%Label for referencing
+	listing options={					%Options for the `listing` package
+		language=#2						%Programming Language
+	}}
+% --> Emoji Support (Needs Compilation via LuaLaTex!)
+\usepackage{emoji}						%Emoji Support
+\setemojifont{TwemojiMozilla}			%Use Mozilla Emojis
+% --> Appendices (\begin{<appendices})
+\usepackage[toc,page]{appendix}			%Appendix usepackage
+% --> BibTeX (\bibliography{<bib.tex>})
+\usepackage[nottoc]{tocbibind}			%Make bibliography play nice w. TOC
+\bibliographystyle{IEEEtran}			%Reference style
+% --> Miscallaneous
+\usepackage{lipsum}						%Generates Lorem Ipsums on demand
+\usepackage{parskip}					%Stop auto-indenting
+\usepackage{import}						%Import other .tex files for structure
+
+
+
+%% BEGIN DOCUMENT -----------------------------------------------------------------
+\begin{document}
+
+%% TITLE --------------------------------------------------------------------------
+
+\begin{titlepage}
+	\vspace*{1cm}
+	\Large
+    \textit{\Institute}
+    \vspace{0.25cm}
+
+	\Huge
+    \textbf{\Title}
+    \vspace{0.25cm}
+
+	\Large
+	\Author
+	\vspace{1.0cm}
+
+	\normalsize
+	\rule{\textwidth}{0.4pt}
+	\newtheorem*{summary}{Summary}
+	\begin{summary}
+		\Docsummary
+	\end{summary}
+	\setcounter{tocdepth}{1}
+	\tableofcontents
+	\vfill
+	\rule{\textwidth}{0.4pt}
+\end{titlepage}
+
+%% MAIN --------------------------------------------------------------------------
+
+\section{Introduction and motivation}
+\label{s:intro}
+After writing for 3+ years in \LaTeXe, I still found myself often jumping inbetween projects to copy certain "complex" pieces of code that I needed, like fancy looking code blocks that I used once in an older project or some obscure \texttt{usepackage} I need. Thus, building a clearly documented template with custom environments and commands would solve this issue; everything I need while writing is now instantly at my fingertips!
+
+It is highly recommended to compile documents made with this template with
+\hologo{LuaLaTeX} to avoid the malfunctioning of certain \texttt{usepackages}.
+\hologo{pdfLaTeX} is quite primitive on its own anyways. Luckily,
+\hologo{TeX}live-full comes with \hologo{LuaLaTeX} out of the box. Furthermore,
+\textit{Overleaf} works on \hologo{TeX}live, so with a simple setting switch
+you can use \hologo{LuaLaTeX} there, too!
+
+\newpage
+\section{Commands}
+\label{s:commands}
+The template comes with a set of new useful commands.
+\subsection{Document property variables}
+\label{ss:docvars}
+A few \textit{document variables} are available, embedded in the output PDF as metadata, as well as used to fill certain fields in the template.
+\begin{itemize}
+	\item \verb!\Title! prints the title of the document.
+	\item \verb!\Author! prints the author(s) of the document.
+	\item \verb!\Institute! prints the institute associated with the document, like a university or company.
+	\item \verb!\Date! prints the date related to the document, like a deadline for a report.
+	\item \verb!\Docsummary! prints the summary of the document.
+\end{itemize}
+
+All these variables are declared at the top of the template file, and are supposed to be altered as desired.
+
+\subsection{The \texttt{now} command}
+\label{ss:now}
+The \verb|\now| command prints the current date and time using \verb|\datetime| and \verb|\today|. This document is compiled at \verb|\now|: \now.
+
+\newpage
+\section{Environments}
+\label{s:envs}
+The template defines some environments, that safe some precious time of setting up styles and nesting environments.
+
+\subsection{The \texttt{code} environment}
+\label{ss:code}
+The \verb|code| environment renders a nice box with title and label to throw code in. For now, it does \textbf{not} support to import code from other files; it expects code to be nested in the environment. The environment has three arguments:
+
+\begin{verbatim}
+\begin{code}{<title>}{<language>}{<label>}
+<code>
+\end{code}
+\end{verbatim}.
+
+
+
+\newtheorem{exmp}{Example}[section]
+\begin{exmp}
+Imagine you are writing a tutorial on \textit{GNU Octave}, the free and open source alternative to \textit{MATLAB} by the GNU Foundation. You want to embed a Octave script to show how to plot two functions, $f(x) = x^{2}$ and $g(x) = \sin{(\cos{x})}$, in a figure for a fixed domain. You now only need to write:
+\begin{verbatim}
+	\begin{code}{Plotting two functions in GNU Octave}{octave}{lst:2func}
+	clear vars;close all; clc;
+	%% VARS
+	x1 = -1:1e-3:1;
+	x2 = -2:1e-3:2;
+	%% FUNCS
+	y1 = x1.^2;
+	y2 = sin(cos(x2))
+	%% PLOT
+	figure(1)
+	hold on; grid on;
+	plot(x1,y1);
+	plot(x2,y2);
+	xlabel(x);
+	ylabel(y);
+	\end{code}
+\end{verbatim}
+When compiling this \LaTeXe code from the template, the output PDF renders
+\begin{code}{Plotting two functions in GNU Octave}{octave}{lst:2func}
+clear vars;close all; clc;
+%% VARS
+x1 = -1:1e-3:1;
+x2 = -2:1e-3:2;
+%% FUNCS
+y1 = x1.^2;
+y2 = sin(cos(x2))
+%% PLOT
+figure(1)
+hold on; grid on;
+plot(x1,y1);
+plot(x2,y2);
+xlabel(x);
+ylabel(y);
+\end{code},
+which looks quite nice! Using \verb!\ref! we can refer to the code block using the label: \ref{lst:2func}.
+\end{exmp}
+
+Parameters other than the provided arguments can ofcourse be tuned manually in the template preamble itself.
+
+\subsection{The \texttt{plot} environment}
+\label{ss:plot}
+The \verb|plot| environment is simply an alias to a \textit{PGFplot}
+\texttt{axis} enviroment, which needs to be initiated inside a
+\texttt{tikzpicture} evironment. This on its own does not allow as much
+flexibility as a \texttt{figure} environment, so \verb|plot| also nests this
+whole structure inside a figure with \verb|H| float. The syntax now becomes
+very simple:
+
+\begin{verbatim}
+	\begin{plot}{<caption>}{<label>}
+	[<pgfplotssset settings to add/override defaults>]
+	<contents of the PGFplot axis object>
+	\end{plot}
+\end{verbatim}.
+
+It is assumed one knows how to use PGFplots when reading this; if not, go to the \textit{Comprehensive \TeX{} Achive Network} for the full \href{https://mirror.koddos.net/CTAN/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf}{documentation}.
+
+\begin{exmp}
+Plots generated by GNU Octave look fine, but not stellar. The output of Listing
+\ref{lst:2func} can look much nicer if we do the whole thing in PGFplots in
+\LaTeXe{} natively. Let's use the \verb|plot| environment for that. Listing
+\ref{lst:plotex} shows the code that plots the two functions. The plot is visible in \autoref{fig:2func}.
+
+\begin{code}{PGFplot code to draw the two function in a subset of $\mathbb{R}^{2}$}{tex}{lst:plotex}
+\begin{plot}{The two functions of Listing \ref{lst:2func}}{fig:2func}
+	[clip=false,
+	xmin=-2,
+	xmax=+2,
+	axis lines=middle,
+	xlabel=$X$,
+	ylabel=$Y$,
+	grid style=dashed]
+	\addplot[samples=50,domain=-1:1,blue]{x^2}
+	node[right,pos=0.95]{ $f(x)=x^{2}$};
+	\addplot[samples=50,domain=-2:2,red]{sin(deg(cos(deg(x))))}
+	node[right,pos=0.95]{ $g(x)=\sin{(\cos{x})}$};
+\end{plot}
+\end{code}
+
+\begin{plot}{The two functions of Listing \ref{lst:2func}}{fig:2func}
+	[clip=false,
+	xmin=-2,
+	xmax=+2,
+	axis lines=middle,
+	xlabel=$X$,
+	ylabel=$Y$,
+	grid style=dashed]
+	\addplot[samples=50,domain=-1:1,blue]{x^2}
+	node[right,pos=0.95]{ $f(x)=x^{2}$};
+	\addplot[samples=50,domain=-2:2,red]{sin(deg(cos(deg(x))))}
+	node[right,pos=0.95]{ $g(x)=\sin{(\cos{x})}$};
+\end{plot}
+
+\end{exmp}
+
+%% APPENDIX -----------------------------------------------------------------
+\newpage
+\begin{appendices}
+\section{The template file}
+The template file can be compiled as a \LaTeXe file as standalone and thus be used as a startpoint for any new projects. Below code functions as a offline reference to the template to see how things work, or just to grab some ideas from it. The full source can be found on the corresponding Github repository, found on this documents title page.
+\import{./}{templatecodeblock.tex}
+
+
+\end{appendices}
+
+%% END DOCUMENT -----------------------------------------------------------------
+\end{document}
+%% ------------------------------------------------------------------------------

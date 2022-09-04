@@ -1,0 +1,188 @@
+\begin{code}{Template}{TeX}{lst:temp}
+%% PREAMBLE --------------------------------------------------------------------------
+% --> Document Variables
+\newcommand{\Title}{TITLE}				%Document title
+\newcommand{\Author}{AUTHOR}			%Document author
+\newcommand{\Date}{\today}				%Document date
+\newcommand{\Institute}{INSTITUTE}		%Document institute
+\newcommand{\Docsummary}{				%Document summary
+This is the summary of the contents of this document
+}
+% --> Setting Document Class, Input, Language and Time
+\documentclass[leqno]{article}			%`leqno` places equation tags to the left
+\usepackage[utf8]{inputenc}				%Unicode Support
+\usepackage[english]{babel}				%Language
+\usepackage[
+			long,						%Long format date
+			nodayofweek,				%Don't show day of week
+			level,						%No clue
+			24hr						%24h format
+			]{datetime}					%Set date settings
+\newcommand{\now}{\today, \currenttime} %Print date+time
+% --> Fonts
+\usepackage{kpfonts}					%Font, supported by TeXlive
+\usepackage[T1]{fontenc}				%Magic thing to get the font working
+% --> Header and Footer Styles
+\pagestyle{headings}					%Headings page number style
+\usepackage{lastpage}					%Last page
+% --> Multicolumns
+\usepackage{multicol}					%Multi-Columns
+% --> TiKz Things
+\usepackage{tikz}						%TiKz
+\usepackage{pdfpages}					%PDF importer, at the wrong spot
+\usetikzlibrary{positioning}			%Positioning TiKz Library
+% --> Table Things
+\usepackage{tabularx}					%TabularX, to make more sexy tables
+\usepackage{booktabs}					%Booktabs in tables
+% --> AMSTeX Things
+\usepackage{amsmath}					%All the AMSMath things
+\usepackage{amssymb}					%Cute symbols
+\usepackage{amsthm}						%Theorems
+% --> Graphics and Figures
+\usepackage{xcolor}						%Fancy colors
+\usepackage{geometry}				    %Page geometry settings
+\usepackage{graphicx}					%Graphics support
+\usepackage{float}						%Float support
+\usepackage{caption}					%For subcaptions in subfigures
+\usepackage{hologo}						%Fancy Logos
+% --> Graphs and Plots
+\usepackage{pgfplots}					%Plotting
+\pgfplotsset{							%Defaults
+	compat=1.18,						%Compatibility
+	clip=false,							%Do not clip plots
+	width=0.9\textwidth,				%Plot width
+	height=0.7\textwidth,				%Plot height
+	axis lines=middle,					%Axis style
+	xlabel=$x$,							%xlabel
+	ylabel=$y$,							%ylabel
+	grid style=dashed					%Grid style
+	}
+\newenvironment{plot}[2]
+	{
+	\newcommand{\plotcap}{#1}
+	\newcommand{\plotlab}{#2}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+		\begin{axis}
+	}
+	{
+		\end{axis}
+		\end{tikzpicture}
+	\caption{\plotcap}
+	\label{\plotlab}
+	\end{figure}
+	}
+% --> Referencing and `hyperref` Settings
+\usepackage{hyperref}					%For cross-referencing, links, forms and more
+\hypersetup{
+    colorlinks=true,					%Links have colors
+    linkcolor=cyan,						%Link color
+    filecolor=magenta,					%File Color
+    urlcolor=cyan,						%URL Color
+	pdftitle={\Title, \Author},			%Embedded PDF Title
+	pdfauthor={\Author},     			%Embedded PDF Author
+    pdfsubject={\Title},   				%Embedded PDF Subject
+    }
+\renewcommand\LayoutCheckField[2]{#1\hfill #2}
+% --> Listings and Code
+\usepackage{listings}					%Code Listings
+\lstdefinestyle{mystyle}{
+	backgroundcolor= {},				%Transparent background
+	commentstyle=\color{green},			%Comment color
+	keywordstyle=\color{magenta},		%Keyword color
+	numberstyle=\tiny\color{black},		%Line number color
+	stringstyle=\color{purple},			%String color
+	basicstyle=\ttfamily\small			%->
+	\color{black},						%Font style
+	breakatwhitespace=false,			%Do not break at whitespace
+	breaklines=true,					%Break lines
+	captionpos=b,						%Add caption below
+	keepspaces=true,					%Keep spaces in code
+	numbers=left,						%Line number position
+	numbersep=5pt,						%Line number separation
+	showspaces=false,					%Show space indicator
+	showstringspaces=false,				%Show space indicator in strings
+	showtabs=true,						%Show tab indicator
+	tabsize=2,							%Tab size
+}
+\lstset{style=mystyle}					%Set `mystyle` as default listing style
+% --> Tcolorbox and Code Environment
+\usepackage{tcolorbox}					%Fancy Boxes around text, e.g. for code blocks
+\tcbuselibrary{							%Set libraries for `tcolorbox`
+	skins,								%Skins
+	breakable,							%Breakable boxes
+	listings}							%Listing boxes
+\tcbset{listing engine=listings}		%Set listing engine
+\newtcblisting[
+	auto counter,
+	number within=section]{code}[3]{	%Code environment
+	listing only,						%Only show listing
+	fonttitle=\bfseries,				%Title font
+	colback=black!5!white,				%Background color
+	colframe=blue!20!black,				%Frame color
+	title=Listing \thetcbcounter: #1,	%Box title
+	size=normal,						%Box size
+	bottom=0.1 mm,						%Bottom sep.
+	sharp corners,						%Use sharp corners
+	breakable,							%Allow box to break
+	label=#3,							%Label for referencing
+	listing options={					%Options for the `listing` package
+		language=#2						%Programming Language
+	}}
+% --> Emoji Support (Needs Compilation via LuaLaTex!)
+\usepackage{emoji}						%Emoji Support
+\setemojifont{TwemojiMozilla}			%Use Mozilla Emojis
+% --> Appendices
+\usepackage[toc,page]{appendix}			%Appendix usepackage
+% --> Miscallaneous
+\usepackage{lipsum}						%Generates Lorem Ipsums on demand
+\usepackage{paralist}
+\usepackage{soul}
+\usepackage{parskip}					%Stop auto-indenting
+\usepackage{import}						%Import other .tex files for structure
+\usepackage{enumitem}					%Custom itemize behavior
+\setitemize{noitemsep,
+topsep=0pt,parsep=0pt,partopsep=0pt}
+
+
+%% BEGIN DOCUMENT -----------------------------------------------------------------
+\begin{document}
+
+%% TITLE --------------------------------------------------------------------------
+
+\begin{titlepage}
+	\vspace*{1cm}
+	\Large
+    \textit{\Institute}
+    \vspace{0.25cm}
+
+	\Huge
+    \textbf{\Title}
+    \vspace{0.25cm}
+
+	\Large
+	\Author
+	\vspace{1.0cm}
+
+	\normalsize
+	\rule{\textwidth}{0.4pt}
+	\newtheorem*{summary}{Summary}
+	\begin{summary}
+		\Docsummary
+	\end{summary}
+	\setcounter{tocdepth}{1}
+	\tableofcontents
+	\vfill
+	\rule{\textwidth}{0.4pt}
+\end{titlepage}
+
+%% MAIN --------------------------------------------------------------------------
+
+%<Main code for sections, chapters, imports, appendices etc.>
+
+%% END DOCUMENT -----------------------------------------------------------------
+\end{document}
+%% ------------------------------------------------------------------------------
+
+\end{code}
