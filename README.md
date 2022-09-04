@@ -1,2 +1,2 @@
 # Jelle's LaTeX Template
- My template for LaTeX2e documents. Please read the documentation found here.
+ My template for LaTeX2e documents. Please read the documentation found [](here).
