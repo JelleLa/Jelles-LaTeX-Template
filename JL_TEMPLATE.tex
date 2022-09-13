@@ -147,9 +147,11 @@ topsep=0pt,parsep=0pt,partopsep=0pt}
 \setemojifont{TwemojiMozilla}			%Use Mozilla Emojis
 % --> Appendices (\begin{<appendices})
 \usepackage[toc,page]{appendix}			%Appendix usepackage
-% --> BibTeX (\bibliography{<bib.tex>})
+% --> BibTeX (\printbibliography)
+\usepackage{biblatex}				%BibLaTeX
+\addbibresource{refs.bib}			%Load Bibfile
 \usepackage[nottoc]{tocbibind}			%Make bibliography play nice w. TOC
-\bibliographystyle{IEEEtran}			%Reference style
+
 % --> Miscallaneous
 \usepackage{lipsum}						%Generates Lorem Ipsums on demand
 \usepackage{parskip}					%Stop auto-indenting
